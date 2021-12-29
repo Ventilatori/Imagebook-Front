@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+  {{ picture.title }} 
+  <span style="font-size:16px;">by: {{ picture.uploader }}</span>
+</h1>
+<div mat-dialog-content>
+  <div>
+    <img mat-card-image [src]="picture.url" />
+  </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
+    <button mat-raised-button color="primary">Like</button>
+    <button mat-raised-button color="primary">Favorite</button>
+</div>

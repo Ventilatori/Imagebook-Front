@@ -1,58 +1,6 @@
 <div>
-    <mat-toolbar color="primary" class="mat-elevation-z8">
-        <div fxHide fxShow.lt-md>
-            <button mat-icon-button>
-                <mat-icon>menu</mat-icon>
-            </button>
-        </div>
-        <mat-icon>storm</mat-icon>
-        SamoVentilatori
-        <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="space-between" fxShow fxHide.lt-md>
-            <div class="toolbar-left-buttons">
-                <a mat-button>
-                    <mat-icon>query_builder</mat-icon>
-                    Newest
-                </a>
-                <a mat-button>
-                    <mat-icon>emoji_events</mat-icon>
-                    Top
-                </a>
-                <a mat-button>
-                    <mat-icon>tag</mat-icon>
-                    Tags
-                </a>
-                <a mat-button>
-                    <mat-icon>favorite</mat-icon>
-                    Favorites
-                </a>
-            </div>
-            <div class="toolbar-right-buttons">
-                <button mat-button *ngIf="!loggedIn" (click)="onAuth(AuthType.Login)">
-                    Log in
-                </button>
-                <a mat-button *ngIf="!loggedIn" (click)="onAuth(AuthType.Register)">
-                    Register
-                </a>
-                <a mat-button *ngIf="loggedIn" (click)="onUpload()">
-                    <mat-icon>upload</mat-icon>
-                    Upload
-                </a>
-                <a mat-button *ngIf="loggedIn" (click)="loggedIn=false">
-                    <mat-icon>person</mat-icon>
-                    Profile
-                </a>
-            </div>
-        </div>
-    </mat-toolbar>
+    <app-navbar></app-navbar>
     <div style="margin: 20px" class="container"> 
-        <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
-
-            <mat-card *ngFor="let a of [].constructor(6)" style="width:300px; padding-bottom:5px; margin: 15px" class="mat-elevation-z4">
-                <img mat-card-image src="https://c8.alamy.com/comp/M8YKWP/black-pc-fan-for-cooling-the-case-isolated-on-a-dark-background-M8YKWP.jpg"/>
-                <mat-card-title style="font-size:2vmax">Computer fan</mat-card-title>
-                <!--<mat-icon style="font-size:2vmax">favorite</mat-icon>-->
-            </mat-card>
-        </div>
         <router-outlet></router-outlet>
     </div>
 </div>
