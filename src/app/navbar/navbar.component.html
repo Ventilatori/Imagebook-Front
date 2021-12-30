@@ -36,7 +36,7 @@
                 <mat-icon>upload</mat-icon>
                 Upload
             </a>
-            <a mat-button *ngIf="loggedIn" (click)="loggedIn=false">
+            <a mat-button *ngIf="loggedIn" (click)="authService.logout()">
                 <mat-icon>person</mat-icon>
                 Profile
             </a>

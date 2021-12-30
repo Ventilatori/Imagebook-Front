@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import {Subscription} from 'rxjs';
 import {AuthDialogComponent, AuthType} from '../auth-dialog/auth-dialog.component';
+import {AuthService} from '../auth/auth.service';
 import {UploadDialogComponent} from '../upload-dialog/upload-dialog.component';
 
 @Component({
@@ -8,34 +10,37 @@ import {UploadDialogComponent} from '../upload-dialog/upload-dialog.component';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   AuthType = AuthType
   loggedIn = false;
+  subUser!: Subscription
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.subUser = this.authService.user.subscribe(user => {
+      this.loggedIn = !!user
+    })
+  }
+
+  ngOnDestroy() {
+    this.subUser.unsubscribe()
+  }
 
   onAuth(type: AuthType): void {
-    const dialogRef = this.dialog.open(AuthDialogComponent, {
+    this.dialog.open(AuthDialogComponent, {
       width: '250px',
       data: {type: type},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true) {
-        this.loggedIn = true
-      }
     });
   }
 
   onUpload(): void {
-    const dialogRef = this.dialog.open(UploadDialogComponent, {
+    this.dialog.open(UploadDialogComponent, {
       width: '80%',
       maxWidth: '500px',
     });
-
-    dialogRef.afterClosed().subscribe(result => result);
-  }
-
-  ngOnInit(): void {
   }
 }

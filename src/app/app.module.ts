@@ -14,8 +14,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
 import { PictureListPageComponent } from './picture-list-page/picture-list-page.component';
 import { PictureViewDialogComponent } from './picture-view-dialog/picture-view-dialog.component';
-import { PictureViewDialogPageComponent } from './picture-view-dialog-page/picture-view-dialog-page.component';
 import { PictureViewPageComponent } from './picture-view-page/picture-view-page.component';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,6 @@ import { PictureViewPageComponent } from './picture-view-page/picture-view-page.
     PictureListComponent,
     PictureListPageComponent,
     PictureViewDialogComponent,
-    PictureViewDialogPageComponent,
     PictureViewPageComponent,
   ],
   imports: [
@@ -37,9 +37,16 @@ import { PictureViewPageComponent } from './picture-view-page/picture-view-page.
     FlexModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

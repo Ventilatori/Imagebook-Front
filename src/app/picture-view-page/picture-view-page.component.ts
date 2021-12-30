@@ -5,8 +5,7 @@ import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-di
 
 @Component({
   selector: 'app-picture-view-page',
-  templateUrl: './picture-view-page.component.html',
-  styleUrls: ['./picture-view-page.component.css']
+  template: '',
 })
 export class PictureViewPageComponent implements OnInit {
 
