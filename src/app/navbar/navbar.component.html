@@ -1,44 +1,28 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
     <div fxHide fxShow.lt-md>
-        <button mat-icon-button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>menu</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+            <button *ngFor="let item of links" mat-menu-item [routerLink]="item.link" (click)="!!item.click && item.click()">
+                <mat-icon>{{item.icon}}</mat-icon>
+                {{item.name}}
+            </button>
+        </mat-menu>
     </div>
     <mat-icon>storm</mat-icon>
     SamoVentilatori
     <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="space-between" fxShow fxHide.lt-md>
         <div class="toolbar-left-buttons">
-            <a mat-button routerLink="/newest" routerLinkActive="mat-button-disabled">
-                <mat-icon>query_builder</mat-icon>
-                Newest
-            </a>
-            <a mat-button routerLink="/top" routerLinkActive="mat-button-disabled">
-                <mat-icon>emoji_events</mat-icon>
-                Top
-            </a>
-            <a mat-button routerLink="/tag/test" routerLinkActive="mat-button-disabled">
-                <mat-icon>tag</mat-icon>
-                Tags
-            </a>
-            <a mat-button routerLink="/favorites" routerLinkActive="mat-button-disabled">
-                <mat-icon>favorite</mat-icon>
-                Favorites
+            <a *ngFor="let item of getLinksForPosition(Position.Left)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive="mat-button-disabled">
+                <mat-icon>{{item.icon}}</mat-icon>
+                {{item.name}}
             </a>
         </div>
         <div class="toolbar-right-buttons">
-            <button mat-button *ngIf="!loggedIn" (click)="onAuth(AuthType.Login)">
-                Log in
-            </button>
-            <a mat-button *ngIf="!loggedIn" (click)="onAuth(AuthType.Register)">
-                Register
-            </a>
-            <a mat-button *ngIf="loggedIn" (click)="onUpload()">
-                <mat-icon>upload</mat-icon>
-                Upload
-            </a>
-            <a mat-button *ngIf="loggedIn" (click)="authService.logout()">
-                <mat-icon>person</mat-icon>
-                Profile
+            <a *ngFor="let item of getLinksForPosition(Position.Right)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive="mat-button-disabled">
+                <mat-icon>{{item.icon}}</mat-icon>
+                {{item.name}}
             </a>
         </div>
     </div>

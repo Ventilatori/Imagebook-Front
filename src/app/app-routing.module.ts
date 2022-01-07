@@ -10,6 +10,7 @@ const picViewChild =
 
 const routes: Routes = [
   { path: '', pathMatch: 'full',redirectTo: 'newest'  },
+  { path: 'feed', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'newest', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'top', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'tag/:id', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
