@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   onAuth(type: AuthType): void {
     this.dialog.open(AuthDialogComponent, {
       width: '250px',
-      data: {type: type},
+      data: type,
     });
   }
 

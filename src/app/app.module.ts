@@ -14,7 +14,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
 import { PictureListPageComponent } from './picture-list-page/picture-list-page.component';
 import { PictureViewDialogComponent } from './picture-view-dialog/picture-view-dialog.component';
-import { PictureViewPageComponent } from './picture-view-page/picture-view-page.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth.interceptor';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
@@ -28,7 +27,6 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     PictureListComponent,
     PictureListPageComponent,
     PictureViewDialogComponent,
-    PictureViewPageComponent,
     ProfilePageComponent,
   ],
   imports: [

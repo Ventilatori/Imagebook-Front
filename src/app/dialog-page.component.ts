@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Data, Router} from '@angular/router';
-import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-dialog.component';
 
 @Component({
-  selector: 'app-picture-view-page',
+  selector: 'app-dialog-page',
   template: '',
 })
-export class PictureViewPageComponent implements OnInit {
+export class DialogPageComponent implements OnInit {
 
   constructor(
     private router: Router,
@@ -17,12 +16,14 @@ export class PictureViewPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe((data: Data) => {
-      const pic = data['picture']
+      const dialog = data['dialog']
+      const dialogData = data['dialogData']
+      const dialogSize = data['dialogSize']
 
-      const dialogRef = this.dialog.open(PictureViewDialogComponent, {
+      const dialogRef = this.dialog.open(dialog, {
         autoFocus: false,
-        maxWidth: '45%',
-        data: pic,
+        maxWidth: dialogSize,
+        data: dialogData,
       })
 
       dialogRef.afterClosed().subscribe(() => {

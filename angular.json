@@ -72,7 +72,8 @@
               "browserTarget": "nbp1:build:production"
             },
             "development": {
-              "browserTarget": "nbp1:build:development"
+              "browserTarget": "nbp1:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
