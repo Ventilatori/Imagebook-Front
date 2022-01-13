@@ -17,6 +17,7 @@ import { PictureViewDialogComponent } from './picture-view-dialog/picture-view-d
 import { PictureViewPageComponent } from './picture-view-page/picture-view-page.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth.interceptor';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {AuthInterceptor} from './auth/auth.interceptor';
     PictureListPageComponent,
     PictureViewDialogComponent,
     PictureViewPageComponent,
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,

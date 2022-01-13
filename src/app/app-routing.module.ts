@@ -4,6 +4,8 @@ import {PictureListPageResolver} from './picture-list-page/picture-list-page.res
 import {PictureListPageComponent} from './picture-list-page/picture-list-page.component';
 import {PictureResolver} from './picture-view-dialog/picture.resolver';
 import {PictureViewPageComponent} from './picture-view-page/picture-view-page.component';
+import {ProfilePageComponent} from './profile-page/profile-page.component';
+import {UserResolver} from './profile-page/user.resolver';
 
 const picViewChild = 
   { path: ':id', component: PictureViewPageComponent, resolve: { picture: PictureResolver }}
@@ -15,6 +17,7 @@ const routes: Routes = [
   { path: 'top', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'tag/:id', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
   { path: 'favorites', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
+  { path: 'user/:id', component: ProfilePageComponent, resolve: { user: UserResolver }, children: [ picViewChild ] },
 ];
 
 @NgModule({

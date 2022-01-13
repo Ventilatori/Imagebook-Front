@@ -4,7 +4,7 @@
             <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button *ngFor="let item of links" mat-menu-item [routerLink]="item.link" (click)="!!item.click && item.click()">
+            <button *ngFor="let item of links" mat-menu-item [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">
                 <mat-icon>{{item.icon}}</mat-icon>
                 {{item.name}}
             </button>
@@ -14,13 +14,13 @@
     SamoVentilatori
     <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="space-between" fxShow fxHide.lt-md>
         <div class="toolbar-left-buttons">
-            <a *ngFor="let item of getLinksForPosition(Position.Left)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive="mat-button-disabled">
+            <a *ngFor="let item of getLinksForPosition(Position.Left)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">
                 <mat-icon>{{item.icon}}</mat-icon>
                 {{item.name}}
             </a>
         </div>
         <div class="toolbar-right-buttons">
-            <a *ngFor="let item of getLinksForPosition(Position.Right)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive="mat-button-disabled">
+            <a *ngFor="let item of getLinksForPosition(Position.Right)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">
                 <mat-icon>{{item.icon}}</mat-icon>
                 {{item.name}}
             </a>

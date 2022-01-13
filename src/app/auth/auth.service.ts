@@ -28,6 +28,11 @@ export class AuthUser {
     }
 };
 
+interface LogInRequest {
+  mail: string
+  password: string
+};
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<AuthUser | null>(null)
