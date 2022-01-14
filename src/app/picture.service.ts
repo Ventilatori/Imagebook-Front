@@ -61,18 +61,22 @@ export class PictureService {
   }
 
   updateTitle(path: string, title: string) {
-    return of(true)
+    return this.http.put('/api/Image/UpdateTitle/' + path, title)
   }
 
   updateDesc(path: string, desc: string) {
-    return of(true)
+    return this.http.put('/api/Image/UpdateDescription/' + path, desc)
   }
 
   updateTags(path: string, tags: string) {
-    return of(true)
+    return this.http.put('/api/Image/UpdateHashtags/' + path, tags)
   }
 
   updatePeople(path: string, people: string) {
-    return of(true)
+    return this.http.put('/api/Image/UpdateTaggedPeople/' + path, people)
+  }
+
+  deletePicture(path: string) {
+    return this.http.delete('/api/Image/DeletePhoto/' + path)
   }
 }

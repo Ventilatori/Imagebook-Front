@@ -31,8 +31,10 @@ export class PictureListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(navigateTo => {
       if(!navigateTo)
         this.location.back()
-      else
+      else {
+        this.location.back()
         this.router.navigate(navigateTo)
+      }
     })
   }
 

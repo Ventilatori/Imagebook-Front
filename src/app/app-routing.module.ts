@@ -8,6 +8,7 @@ import {UserResolver} from './profile-page/user.resolver';
 import {DialogPageComponent} from './dialog-page.component';
 import {PictureViewDialogComponent} from './picture-view-dialog/picture-view-dialog.component';
 import {VerifyDialogComponent} from './auth/verify-dialog/verify-dialog.component';
+import {ModerationDialogComponent} from './moderation-dialog/moderation-dialog.component';
 
 const picViewChild = { 
   path: ':id', 
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'tag/:id', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
   { path: 'favorites', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
   { path: 'user/:name', component: ProfilePageComponent, resolve: { user: UserResolver }, children: [ picViewChild ] },
-  { path: 'verify/:id', component: DialogPageComponent, data: { dialog: VerifyDialogComponent, dialogSize: '300px', dialogData: true, dialogRoute: true }}
+  { path: 'verify/:id', component: DialogPageComponent, data: { dialog: VerifyDialogComponent, dialogSize: '300px', dialogData: true, dialogRoute: true }},
+  { path: 'moderate', component: DialogPageComponent, data: { dialog: ModerationDialogComponent, dialogSize: '80%' }}
 ];
 
 @NgModule({

@@ -12,7 +12,7 @@ import {PictureService} from '../picture.service';
 })
 export class PictureViewDialogComponent implements OnInit {
   picture!: Picture;
-  tags = []
+  tags = ['test']
   people = []
   isOwner = false
 
@@ -43,13 +43,17 @@ export class PictureViewDialogComponent implements OnInit {
   editTitle() {
     const newTitle = prompt("Enter new title:", 
                            this.picture.title? this.picture.title : "")
-    this.pictureService.updateDesc(this.picture.path, newTitle? newTitle : "")
+    this.pictureService.updateDesc(this.picture.path, newTitle? newTitle : "").subscribe(
+      _ => {}
+    )
   }
 
   editDesc() {
     const newDesc = prompt("Enter new description:", 
                            this.picture.description? this.picture.description : "")
-    this.pictureService.updateDesc(this.picture.path, newDesc? newDesc : "")
+    this.pictureService.updateDesc(this.picture.path, newDesc? newDesc : "").subscribe(
+      _ => {}
+    )
   }
 
   editTags() {
@@ -58,5 +62,12 @@ export class PictureViewDialogComponent implements OnInit {
 
   editPeople() {
     //prompt("Enter new description:", this.picture.people)
+  }
+
+  deletePhoto() {
+    if(confirm("Are you sure you want to delete this photo?"))
+      this.pictureService.deletePicture(this.picture.path).subscribe(
+        _ => {}
+      )
   }
 }

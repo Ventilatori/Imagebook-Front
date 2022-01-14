@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Picture} from '../models/picture.model';
+import {ModeratedPicture, ModerationService} from '../moderation.service';
 import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-dialog.component';
 
 @Component({
@@ -10,20 +11,46 @@ import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-di
 })
 export class ModerationDialogComponent implements OnInit {
   // Change to moderation picture since it needs to be base64
-  picture: Picture | null = null
+  picture: ModeratedPicture | null = null
   // Temporary
   tags = []
   people = []
 
   constructor(
     public dialogRef: MatDialogRef<PictureViewDialogComponent>,
-    // ModerationService
+    private moderationService: ModerationService,
     @Inject(MAT_DIALOG_DATA) public data: null
   ) {
   }
 
   ngOnInit(): void {
-    // ModerationService getPhotoFromQueue, if empty wait 5s then reload
+    this.getNext()
   }
 
+  approve() {
+    if(this.picture) {
+      this.moderationService.approvePicture(this.picture).subscribe(
+        _ => {}
+      )
+    }
+    this.getNext()
+  }
+
+  disapprove() {
+    this.getNext()
+  }
+
+  getNext() {
+    this.moderationService.getNext().subscribe(
+      res => {
+        if(res == {}) {
+          setTimeout(() => this.getNext(), 5000) 
+          this.picture = null
+        }
+        else {
+          this.picture = res as ModeratedPicture
+        }
+      }
+    )
+  }
 }
