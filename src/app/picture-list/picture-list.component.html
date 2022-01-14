@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
     <mat-card *ngFor="let pic of pictures" class="mat-elevation-z4" (click)="onPictureClick(pic)">
-        <img mat-card-image [src]="pic.url"/>
+        <img mat-card-image [src]="pic.path"/>
         <mat-card-title style="">
             {{pic.title}}
             <span class="uploader">

@@ -24,7 +24,7 @@ export class PictureListComponent implements OnInit {
       data: pic,
     })
 
-    this.location.go(this.location.path() + '/' + pic.id)
+    this.location.go(this.location.path() + '/' + pic.path)
 
     dialogRef.afterClosed().subscribe(() => {
       this.location.back()

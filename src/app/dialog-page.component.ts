@@ -19,11 +19,12 @@ export class DialogPageComponent implements OnInit {
       const dialog = data['dialog']
       const dialogData = data['dialogData']
       const dialogSize = data['dialogSize']
+      const dialogRoute = data['dialogRoute']
 
       const dialogRef = this.dialog.open(dialog, {
         autoFocus: false,
         maxWidth: dialogSize,
-        data: dialogData,
+        data: dialogRoute? this.route : dialogData,
       })
 
       dialogRef.afterClosed().subscribe(() => {

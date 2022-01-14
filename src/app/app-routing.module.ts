@@ -7,6 +7,7 @@ import {ProfilePageComponent} from './profile-page/profile-page.component';
 import {UserResolver} from './profile-page/user.resolver';
 import {DialogPageComponent} from './dialog-page.component';
 import {PictureViewDialogComponent} from './picture-view-dialog/picture-view-dialog.component';
+import {VerifyDialogComponent} from './auth/verify-dialog/verify-dialog.component';
 
 const picViewChild = { 
   path: ':id', 
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'top', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'tag/:id', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
   { path: 'favorites', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
-  { path: 'user/:id', component: ProfilePageComponent, resolve: { user: UserResolver }, children: [ picViewChild ] },
+  { path: 'user/:name', component: ProfilePageComponent, resolve: { user: UserResolver }, children: [ picViewChild ] },
+  { path: 'verify/:id', component: DialogPageComponent, data: { dialog: VerifyDialogComponent, dialogSize: '300px', dialogData: true, dialogRoute: true }}
 ];
 
 @NgModule({

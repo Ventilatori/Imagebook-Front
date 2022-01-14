@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FlexModule } from '@angular/flex-layout';
-import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
+import { AuthDialogComponent } from './auth/auth-dialog/auth-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -17,6 +17,7 @@ import { PictureViewDialogComponent } from './picture-view-dialog/picture-view-d
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth.interceptor';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { VerifyDialogComponent } from './auth/verify-dialog/verify-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     PictureListPageComponent,
     PictureViewDialogComponent,
     ProfilePageComponent,
+    VerifyDialogComponent,
   ],
   imports: [
     BrowserModule,

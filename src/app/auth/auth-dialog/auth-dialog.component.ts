@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
-import {AuthService} from '../auth/auth.service';
+import {AuthService} from '../auth.service';
 
 export enum AuthType {
   Login,

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
-import {AuthDialogComponent, AuthType} from '../auth-dialog/auth-dialog.component';
+import {AuthDialogComponent, AuthType} from '../auth/auth-dialog/auth-dialog.component';
 import {AuthService} from '../auth/auth.service';
 import {UploadDialogComponent} from '../upload-dialog/upload-dialog.component';
 

@@ -1,19 +1,11 @@
-// export class Picture {
-//     constructor(
-//         public id: string, 
-//         public title: string, 
-//         public url: string,
-//         public uploader: string,
-//         public likes = 0,
-//         public views = 0
-//     ) {}
-// };
-
-export interface Picture {
-    id: string
+export interface APIPicture {
     title: string
-    url: string
+    path: string
+    description: string
+    numberOfLikes: number
+    timePosted: Date
+}
+
+export interface Picture extends APIPicture {
     uploader: string
-    likes: number
-    views: number
 }

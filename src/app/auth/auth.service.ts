@@ -72,4 +72,8 @@ export class AuthService {
     //this.user.next(user)
     //return of(user)
   }
+
+  verify(id: string): Observable<Message> {
+    return this.http.post<Message>('/api/Account/Verify/'+id, {})
+  }
 }

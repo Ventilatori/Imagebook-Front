@@ -18,11 +18,12 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.authService.user.pipe(
       take(1),
       exhaustMap(user => {
-        if(user && user.token) {
+        console.log(request.url)
+        if(user && user.token && request.url.startsWith("/api")) {
           console.log("Using token:", user.token)
           request = request.clone({
-            //headers: request.headers.append("Authorization", user.token), 
-            //withCredentials: true
+            headers: request.headers.append("Authorization", user.token), 
+            withCredentials: true
           })
         }
         return next.handle(request)

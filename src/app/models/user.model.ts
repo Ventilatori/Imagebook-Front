@@ -1,18 +1,12 @@
 import {Picture} from "./picture.model";
 
-// export class User {
-//     constructor(
-//         public id: string, 
-//         public name: string, 
-//         public email: string,
-//     ) {}
-// };
-
-export interface User {
-    id: string
+export interface APIUser {
     name: string
     email: string
     picture: string
+}
+
+export interface User extends APIUser {
     uploads: Picture[]
     tagged: Picture[]
 }
