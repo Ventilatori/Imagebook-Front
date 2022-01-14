@@ -7,15 +7,15 @@
             <div>Mutual Friends: 4</div>
         </div>
         <div class="user-controls" fxLayout="column" fxLayoutAlign="center center" *ngIf="!isOwner">
-            <button mat-raised-button color="accent">Add as a friend</button>
-            <button mat-raised-button color="warn">Block</button>
+            <button mat-raised-button color="accent" *ngIf="!isFriend" (click)="follow()">Add as a friend</button>
+            <button mat-raised-button color="warn" *ngIf="isFriend" (click)="follow()">Remove friend</button>
         </div>
         <div class="user-controls" fxLayout="column" fxLayoutAlign="center center" *ngIf="isOwner">
             <button mat-raised-button color="accent">Manage Friends</button>
-            <button mat-raised-button color="warn">Manage Blocks</button>
             <button mat-raised-button>Change Email</button>
             <button mat-raised-button>Change Password</button>
             <button mat-raised-button>Change Profile Picture</button>
+            <button mat-raised-button color="warn" (click)="logout()">Log out</button>
         </div>
     </div>
     <div class="separator" fxHide.xs="true"></div>

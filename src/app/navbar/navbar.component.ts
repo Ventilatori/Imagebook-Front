@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {AuthDialogComponent, AuthType} from '../auth/auth-dialog/auth-dialog.component';
-import {AuthService} from '../auth/auth.service';
+import {AuthService, AuthUser} from '../auth/auth.service';
+import {User} from '../models/user.model';
 import {UploadDialogComponent} from '../upload-dialog/upload-dialog.component';
 
 enum Position {
@@ -29,6 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   Position = Position
   loggedIn = false;
   subUser!: Subscription
+  user: AuthUser | null = null
 
   allLinks: Link[] = [
     { name: "Feed", link: "/feed", icon: "explore", loggedIn: true, pos: Position.Left },
@@ -39,18 +42,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { name: "Login", click: () => this.onAuth(AuthType.Login), icon: "login", loggedIn: false, pos: Position.Right },
     { name: "Register", click: () => this.onAuth(AuthType.Register), icon: "person_add", loggedIn: false, pos: Position.Right },
     { name: "Upload", click: () => this.onUpload(), icon: "upload", loggedIn: true, pos: Position.Right },
-    { name: "Profile", click: () => this.authService.logout(), icon: "person", loggedIn: true, pos: Position.Right },
+    { name: "Profile", click: () => this.gotoProfile(), icon: "person", loggedIn: true, pos: Position.Right },
   ]
   links: Link[] = []
 
   constructor(
     public dialog: MatDialog,
-    public authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.subUser = this.authService.user.subscribe(user => {
       this.loggedIn = !!user
+      this.user = user
       this.links = this.allLinks.filter(l => l.loggedIn === undefined || l.loggedIn === this.loggedIn)
     })
   }
@@ -75,5 +80,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       width: '80%',
       maxWidth: '500px',
     });
+  }
+
+  gotoProfile(): void {
+    if(this.user)
+      this.router.navigate(['/user', this.user.name])
   }
 }

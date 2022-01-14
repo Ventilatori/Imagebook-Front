@@ -1,13 +1,45 @@
-<h1 mat-dialog-title>
-  {{ picture.title }} 
-  <span style="font-size:16px;">by: {{ picture.uploader }}</span>
+<h1 mat-dialog-title fxLayout="row" fxLayoutAlign="space-between">
+  <div>
+    {{ picture.title }}
+    <span style="font-size:16px;">by: 
+      <a class="fakeLink"
+        (click)="dialogRef.close(['/user/',picture.uploader])">{{ picture.uploader }}</a>
+    </span>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" *ngIf="!isOwner" (click)="like()">
+      <mat-icon *ngIf="!picture.isLiked">favorite_border</mat-icon>
+      <mat-icon *ngIf="!!picture.isLiked">favorite</mat-icon>
+    </button>
+    <button mat-raised-button color="accent" *ngIf="isOwner" (click)="editTitle()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
 </h1>
 <div mat-dialog-content>
   <div>
-    <img mat-card-image [src]="picture.path" />
+    <img mat-card-image [src]="'/api/Images/Standard/'+picture.path" />
   </div>
-</div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
-    <button mat-raised-button color="primary">Like</button>
-    <button mat-raised-button color="primary">Favorite</button>
+  <div class="description">
+    {{ picture.description }} 
+    <a *ngIf="isOwner" class="fakeLink"
+      (click)="editDesc()">(edit description)</a>
+  </div>
+  <div class="likes">
+    <span class="static">Likes: {{ picture.numberOfLikes }}</span>
+  </div>
+  <div class="tags" *ngIf="tags && tags.length != 0">
+    <span class="static">Tags: </span>
+    <a *ngFor="let tag of tags" class="fakeLink"
+      (click)="dialogRef.close(['/tag/',tag])">#{{ tag }} </a>
+    <a *ngIf="isOwner" class="fakeLink"
+      (click)="editTags()">(edit)</a>
+  </div>
+  <div class="tags" *ngIf="people && people.length != 0">
+    <span class="static">Tagged People: </span>
+    <a *ngFor="let p of people" class="fakeLink"
+      (click)="dialogRef.close(['/profile/', p])">{{ p }} </a>
+    <a *ngIf="isOwner" class="fakeLink"
+      (click)="editPeople()">(edit)</a>
+  </div>
 </div>

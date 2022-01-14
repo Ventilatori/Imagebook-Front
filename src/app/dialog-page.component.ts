@@ -27,8 +27,12 @@ export class DialogPageComponent implements OnInit {
         data: dialogRoute? this.route : dialogData,
       })
 
-      dialogRef.afterClosed().subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route })
+      dialogRef.afterClosed().subscribe(navigateTo => {
+        if(!navigateTo) {
+          this.router.navigate(['../'], { relativeTo: this.route })
+        } else {
+          this.router.navigate(navigateTo)
+        }
       })
     })
   }

@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Location} from '@angular/common';
 import {Picture} from '../models/picture.model';
 import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-dialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-picture-list',
@@ -14,7 +15,8 @@ export class PictureListComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {}
 
   onPictureClick(pic: Picture): void {
@@ -26,8 +28,11 @@ export class PictureListComponent implements OnInit {
 
     this.location.go(this.location.path() + '/' + pic.path)
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.location.back()
+    dialogRef.afterClosed().subscribe(navigateTo => {
+      if(!navigateTo)
+        this.location.back()
+      else
+        this.router.navigate(navigateTo)
     })
   }
 

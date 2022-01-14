@@ -24,8 +24,7 @@ function addUploader(name: string) {
   return (pic: APIPicture): Picture => {
     return {
       uploader: name,
-      ...pic,
-      path: '/api/Images/Standard/' + pic.path
+      ...pic
     }
   }
 }
@@ -46,5 +45,12 @@ export class UserService {
           tagged: res.taggedPhotos? res.taggedPhotos.map(addUploader(res.user.userName)) : []
         }
       }))
+  }
+
+  follow(username: string, toggle: boolean) {
+    if(toggle) 
+      return this.http.post('/api/API/FollowUser/' + username, {})
+    else
+      return this.http.delete('/api/API/UnfollowUser/' + username)
   }
 }

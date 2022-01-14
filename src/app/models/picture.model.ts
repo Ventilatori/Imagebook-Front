@@ -3,6 +3,7 @@ export interface APIPicture {
     path: string
     description: string
     numberOfLikes: number
+    isLiked?: boolean
     timePosted: Date
 }
 

@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>
+  <div *ngIf="!!picture">
+    Moderation: {{ picture.title }}
+    <span style="font-size:16px;">by: 
+      <a class="fakeLink"
+        (click)="dialogRef.close(['/user/',picture.uploader])">{{ picture.uploader }}</a>
+    </span>
+  </div>
+  <div *ngIf="!picture">
+    Moderation: Queue empty
+  </div>
+</h1>
+<div mat-dialog-content>
+  <div *ngIf="!!picture">
+    <div>
+      <img mat-card-image [src]="'/api/Images/Standard/'+picture.path" />
+    </div>
+    <div class="description">
+      {{ picture.description }} 
+    </div>
+    <div class="likes">
+      <span class="static">Likes: {{ picture.numberOfLikes }}</span>
+    </div>
+    <div class="tags" *ngIf="tags && tags.length != 0">
+      <span class="static">Tags: </span>
+      <a *ngFor="let tag of tags" class="fakeLink"
+        (click)="dialogRef.close(['/tag/',tag])">#{{ tag }} </a>
+    </div>
+    <div class="tags" *ngIf="people && people.length != 0">
+      <span class="static">Tagged People: </span>
+      <a *ngFor="let p of people" class="fakeLink"
+        (click)="dialogRef.close(['/profile/', p])">{{ p }} </a>
+    </div>
+  </div>
+  <div *ngIf="!picture">
+    Queue is empty, auto-refreshing every 5 seconds.
+  </div>
+</div>

@@ -36,7 +36,6 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthUser> {
-    //const res = this.users.filter(user => user.name == username) 
     const formData = new FormData()
     formData.append("mail", email)
     formData.append("password", password)
@@ -54,6 +53,7 @@ export class AuthService {
   }
 
   logout() {
+    this.http.post('/api/Account/LogOut', {}).subscribe(_ => {})
     localStorage.removeItem("auth")
     this.user.next(null)
   }
@@ -63,14 +63,11 @@ export class AuthService {
     formData.append("mail", email)
     formData.append("userName", username)
     formData.append("password", password)
-    return this.http.post<Message>('/api/Account/Register', formData).pipe(exhaustMap(_ => {
-      return of(true)
-    }))
-    // Test data
-    //const user = new AuthUser(username, username, email, password, Number.MAX_VALUE)
-    //this.users.push(user)
-    //this.user.next(user)
-    //return of(user)
+    return this.http.post<Message>('/api/Account/Register', formData).pipe(
+      exhaustMap(_ => {
+        return of(true)
+      })
+    )
   }
 
   verify(id: string): Observable<Message> {

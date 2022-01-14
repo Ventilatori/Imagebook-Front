@@ -6,12 +6,14 @@ import {APIUser} from './models/user.model';
 
 interface PictureResponse {
   photo: APIPicture,
-  user: APIUser
+  user: {
+    userName: string
+  }
 }
 
 function convertFromAPI(e: PictureResponse): Picture {
   return {
-    uploader: e.user.name,
+    uploader: e.user.userName,
     ...e.photo
   }
 }
@@ -34,7 +36,9 @@ export class PictureService {
   }
 
   getPicture(id: string): Observable<Picture> {
-    return this.http.get<Picture>('http://localhost:3000/pictures/' + id)
+    return this.http.get<PictureResponse>('/api/API/GetPhoto/' + id).pipe(
+      map(apipic => convertFromAPI(apipic))
+    )
   }
 
   //TODO: Add title
@@ -46,5 +50,29 @@ export class PictureService {
     data.append('Hashtags', tags.join(" "))
     data.append('TaggedUsers', users.join(" "))
     return this.http.post('/api/Image/AddPhoto', data)
+  }
+
+  likePicture(path: string, like: boolean) {
+    if(like) {
+      return this.http.post('/api/Image/LikePhoto/'+path, {})
+    } else {
+      return this.http.delete('/api/Image/UnlikePhoto/'+path)
+    }
+  }
+
+  updateTitle(path: string, title: string) {
+    return of(true)
+  }
+
+  updateDesc(path: string, desc: string) {
+    return of(true)
+  }
+
+  updateTags(path: string, tags: string) {
+    return of(true)
+  }
+
+  updatePeople(path: string, people: string) {
+    return of(true)
   }
 }

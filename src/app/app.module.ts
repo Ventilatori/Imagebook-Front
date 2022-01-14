@@ -18,6 +18,7 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth.interceptor';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { VerifyDialogComponent } from './auth/verify-dialog/verify-dialog.component';
+import { ModerationDialogComponent } from './moderation-dialog/moderation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { VerifyDialogComponent } from './auth/verify-dialog/verify-dialog.compon
     PictureViewDialogComponent,
     ProfilePageComponent,
     VerifyDialogComponent,
+    ModerationDialogComponent,
   ],
   imports: [
     BrowserModule,
