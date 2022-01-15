@@ -10,7 +10,9 @@ import {UserService} from '../user.service';
 
 @Injectable({providedIn: 'root'})
 export class UserResolver implements Resolve<User> {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
     return this.userService.getUser(route.params['name']);

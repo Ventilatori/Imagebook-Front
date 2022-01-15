@@ -5,6 +5,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
+import {NotificationService} from '../notification.service';
 import {PictureService} from '../picture.service';
 
 // TODO: Actually handle files, change text
@@ -19,7 +20,7 @@ export class UploadDialogComponent implements OnInit {
   tagCtrl = new FormControl();
   friendCtrl = new FormControl();
   filteredTags: Observable<string[]>;
-  allTags: string[] = ['Funny', 'Cold', 'Cool', 'hehe'];
+  allTags: string[] = ['Funny', 'Cold', 'Cool', 'hehe', 'Cats'];
   tags: string[] = [];
   friends: string[] = [];
   file: File | null = null
@@ -32,6 +33,7 @@ export class UploadDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<UploadDialogComponent>,
     private pictureService: PictureService,
+    private notificationService: NotificationService,
     //@Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
@@ -49,11 +51,18 @@ export class UploadDialogComponent implements OnInit {
 
   onSubmit(): void {
     if(this.title && this.file) {
-      //TODO: Success/Error message
       this.pictureService.uploadPicture(
         this.title, this.description, 
         this.tags, this.friends, 
-        this.file).subscribe(_ => this.dialogRef.close())
+        this.file).subscribe({
+          next: _ => {
+            this.dialogRef.close()
+            this.notificationService.notify('Photo uploaded successfully!', 'success')
+          },
+          error: _ => {
+            this.notificationService.notify('Error: Failed to upload photo!', 'danger')
+          }
+        })
     }
   }
 

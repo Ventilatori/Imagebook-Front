@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
+import {NotificationService} from 'src/app/notification.service';
 import {AuthService} from '../auth.service';
 
 export enum AuthType {
@@ -27,6 +28,7 @@ export class AuthDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<AuthDialogComponent>,
     private authService: AuthService,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: AuthType,
   ) {
     if(data == AuthType.Register) {
@@ -46,7 +48,6 @@ export class AuthDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: Add loading spinner
     const email = this.authForm.value.email
     const username = this.authForm.value.username
     const password = this.authForm.value.password
@@ -59,12 +60,10 @@ export class AuthDialogComponent implements OnInit {
           this.waitForConfirmation = true
         } else {
           this.dialogRef.close()
+          this.notificationService.notify('Logged in successfully!', 'success')
         }
       },
-      error: err => {
-        // TODO: Add alert/snackbar
-        console.error("AuthError", err)
-      }
+      error: _ => this.notificationService.notify('Error: Failed to authenticate!', 'danger')
     })
   }
 

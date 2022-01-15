@@ -1,10 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {Picture} from './models/picture.model';
+import {APIPicture} from './models/picture.model';
 
 export interface ModeratedPicture {
-  metadata: Picture,
+  metadata: APIPicture,
   base64Content: BinaryData
 }
 
@@ -14,8 +14,8 @@ export class ModerationService {
     private http: HttpClient,
   ) { }
 
-  getNext(): Observable<ModeratedPicture | {}> {
-    return this.http.get('/api/Moderator/GetUnapprovedImage')
+  getNext(): Observable<ModeratedPicture> {
+    return this.http.get<ModeratedPicture>('/api/Moderator/GetUnapprovedImage')
   }
 
   approvePicture(pic: ModeratedPicture) {

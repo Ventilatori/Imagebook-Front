@@ -1,8 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {map, Observable, of} from 'rxjs';
-import {Picture} from './models/picture.model';
+import {APIPicture, Picture} from './models/picture.model';
 import {APIUser, User} from './models/user.model';
+import {convertFromAPI} from './picture.service';
 
 // TODO: Merge with APIUser
 interface UserResult {
@@ -16,8 +17,8 @@ interface UserResult {
 
 interface GetUserResponse {
   user: UserResult,
-  uploadedPhotos: Picture[]
-  taggedPhotos: Picture[]
+  uploadedPhotos: APIPicture[]
+  taggedPhotos: APIPicture[]
 }
 
 @Injectable({providedIn: 'root'})
@@ -31,8 +32,8 @@ export class UserService {
           name: res.user.userName, 
           email: res.user.mail,
           picture: "/api/Images/Profile/" + (res.user.profilePicture? res.user.profilePicture : "default.png"),
-          uploads: res.uploadedPhotos? res.uploadedPhotos : [],
-          tagged: res.taggedPhotos? res.taggedPhotos : []
+          uploads: res.uploadedPhotos? res.uploadedPhotos.map(p => convertFromAPI(p)) : [],
+          tagged: res.taggedPhotos? res.taggedPhotos.map(p => convertFromAPI(p)) : []
         }
       }))
   }

@@ -1,0 +1,13 @@
+h1 button {
+    margin-left: 15px;
+}
+
+.fakeLink {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.fakeLink:hover {
+    color: #AAA;
+    cursor: pointer;
+}

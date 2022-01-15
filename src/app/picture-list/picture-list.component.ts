@@ -1,22 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Location} from '@angular/common';
 import {Picture} from '../models/picture.model';
 import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-dialog.component';
 import {Router} from '@angular/router';
+import {PictureService} from '../picture.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-picture-list',
   templateUrl: './picture-list.component.html',
   styleUrls: ['./picture-list.component.css'],
 })
-export class PictureListComponent implements OnInit {
+export class PictureListComponent implements OnInit, OnDestroy {
   @Input() pictures?: Picture[]
+  picDelSubscription!: Subscription
 
   constructor(
     public dialog: MatDialog,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private pictureService: PictureService
   ) {}
 
   onPictureClick(pic: Picture): void {
@@ -32,12 +36,22 @@ export class PictureListComponent implements OnInit {
       if(!navigateTo)
         this.location.back()
       else {
-        this.location.back()
         this.router.navigate(navigateTo)
       }
     })
   }
 
   ngOnInit(): void {
+    this.picDelSubscription = this.pictureService.pictureDeleted.subscribe(
+      path => {
+        if(this.pictures)
+          this.pictures = this.pictures.filter(pic => pic.path != path)
+      }
+    )
+  }
+
+  ngOnDestroy(): void {
+    if(this.picDelSubscription)
+      this.picDelSubscription.unsubscribe()
   }
 }

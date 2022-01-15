@@ -1,22 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ModeratedPicture, ModerationService} from '../moderation.service';
+import {NotificationService} from '../notification.service';
 
 @Component({
   selector: 'app-moderation-dialog',
   templateUrl: './moderation-dialog.component.html',
   styleUrls: ['./moderation-dialog.component.css']
 })
-export class ModerationDialogComponent implements OnInit {
-  // Change to moderation picture since it needs to be base64
+export class ModerationDialogComponent implements OnInit, OnDestroy {
   picture: ModeratedPicture | null = null
-  // Temporary
-  tags = []
-  people = []
+  tags: string[] = []
+  people: string[] = []
+  timeoutRef: any = undefined
 
   constructor(
     public dialogRef: MatDialogRef<ModerationDialogComponent>,
     private moderationService: ModerationService,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: null
   ) {
   }
@@ -25,11 +26,22 @@ export class ModerationDialogComponent implements OnInit {
     this.getNext()
   }
 
+  ngOnDestroy(): void {
+    if(this.timeoutRef) {
+      clearTimeout(this.timeoutRef)
+    }
+  }
+
   approve() {
     if(this.picture) {
-      this.moderationService.approvePicture(this.picture).subscribe(
-        _ => {}
-      )
+      this.moderationService.approvePicture(this.picture).subscribe({
+        next: _ => {
+          this.notificationService.notify('Photo approved!', 'success')
+        },
+        error: _ => {
+          this.notificationService.notify('Error: Photo approval failed!', 'danger')
+        }
+      })
     }
     this.getNext()
   }
@@ -41,12 +53,17 @@ export class ModerationDialogComponent implements OnInit {
   getNext() {
     this.moderationService.getNext().subscribe(
       res => {
-        if(res == {}) {
-          setTimeout(() => this.getNext(), 5000) 
-          this.picture = null
+        if(res && res.metadata != null) {
+          this.picture = res
+          this.tags = this.picture.metadata.hashtags.split('|')
+          this.people = this.picture.metadata.taggedUsers.split('|')
+          this.timeoutRef = undefined
         }
         else {
-          this.picture = res as ModeratedPicture
+          this.timeoutRef = setTimeout(() => this.getNext(), 5000) 
+          this.picture = null
+          this.tags = []
+          this.people = []
         }
       }
     )

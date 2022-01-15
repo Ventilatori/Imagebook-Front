@@ -28,12 +28,12 @@
     <div class="description">
       {{ picture.metadata.description }} 
     </div>
-    <div class="tags" *ngIf="tags && tags.length != 0">
+    <div class="tags">
       <span class="static">Tags: </span>
       <a *ngFor="let tag of tags" class="fakeLink"
         (click)="dialogRef.close(['/tag/',tag])">#{{ tag }} </a>
     </div>
-    <div class="tags" *ngIf="people && people.length != 0">
+    <div class="tags">
       <span class="static">Tagged People: </span>
       <a *ngFor="let p of people" class="fakeLink"
         (click)="dialogRef.close(['/profile/', p])">{{ p }} </a>
