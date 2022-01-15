@@ -9,6 +9,8 @@ import {DialogPageComponent} from './dialog-page.component';
 import {PictureViewDialogComponent} from './picture-view-dialog/picture-view-dialog.component';
 import {VerifyDialogComponent} from './auth/verify-dialog/verify-dialog.component';
 import {ModerationDialogComponent} from './moderation-dialog/moderation-dialog.component';
+import {SearchResultComponent} from './search-result/search-result.component';
+import {UserSearchResolver} from './search-dialog/user-search.resolver';
 
 const picViewChild = { 
   path: ':id', 
@@ -26,7 +28,9 @@ const routes: Routes = [
   { path: 'favorites', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
   { path: 'user/:name', component: ProfilePageComponent, resolve: { user: UserResolver }, children: [ picViewChild ] },
   { path: 'verify/:id', component: DialogPageComponent, data: { dialog: VerifyDialogComponent, dialogSize: '300px', dialogData: true, dialogRoute: true }},
-  { path: 'moderate', component: DialogPageComponent, data: { dialog: ModerationDialogComponent, dialogSize: '80%' }}
+  { path: 'moderate', component: DialogPageComponent, data: { dialog: ModerationDialogComponent, dialogSize: '80%' }},
+  { path: 'search/people/:query', component: SearchResultComponent, resolve: { results: UserSearchResolver }, children: [ picViewChild ] },
+  { path: 'search/tags/:query', component: SearchResultComponent, children: [ picViewChild ] },
 ];
 
 @NgModule({

@@ -19,6 +19,8 @@ import {AuthInterceptor} from './auth/auth.interceptor';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { VerifyDialogComponent } from './auth/verify-dialog/verify-dialog.component';
 import { ModerationDialogComponent } from './moderation-dialog/moderation-dialog.component';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { ModerationDialogComponent } from './moderation-dialog/moderation-dialog
     ProfilePageComponent,
     VerifyDialogComponent,
     ModerationDialogComponent,
+    SearchDialogComponent,
+    SearchResultComponent,
   ],
   imports: [
     BrowserModule,

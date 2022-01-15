@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Picture} from '../models/picture.model';
 import {ModeratedPicture, ModerationService} from '../moderation.service';
-import {PictureViewDialogComponent} from '../picture-view-dialog/picture-view-dialog.component';
 
 @Component({
   selector: 'app-moderation-dialog',
@@ -17,7 +15,7 @@ export class ModerationDialogComponent implements OnInit {
   people = []
 
   constructor(
-    public dialogRef: MatDialogRef<PictureViewDialogComponent>,
+    public dialogRef: MatDialogRef<ModerationDialogComponent>,
     private moderationService: ModerationService,
     @Inject(MAT_DIALOG_DATA) public data: null
   ) {

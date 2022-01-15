@@ -26,18 +26,25 @@ export class ProfilePageComponent implements OnInit {
     this.route.data.subscribe((data: Data) => {
       this.user = data['user']
       this.authService.user.pipe(take(1)).subscribe(u => {
-        if(u)
-          this.isOwner = u.name == this.user.name
-        else
-          this.isOwner = false
+        this.isOwner = (!!u && u.name == this.user.name) && false
       })
     })
   }
 
   follow() {
-    this.userService.follow(this.user.name, !this.isFriend).subscribe(
+    this.userService.followUser(this.user.name, !this.isFriend).subscribe(
       _ => this.isFriend = !this.isFriend
     )
+  }
+
+  changeProfilePic(e: Event) {
+    const input = e.target as HTMLInputElement
+    if(input.files) {
+      const file = input.files.item(0)
+      if(file) {
+        this.userService.changeProfilePic(file).subscribe(_ => {})
+      }
+    }
   }
 
   logout() {

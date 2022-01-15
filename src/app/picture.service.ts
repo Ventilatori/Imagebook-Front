@@ -1,20 +1,13 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {map, Observable, of} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {APIPicture, Picture} from './models/picture.model';
-import {APIUser} from './models/user.model';
 
-interface PictureResponse {
-  photo: APIPicture,
-  user: {
-    userName: string
-  }
-}
-
-function convertFromAPI(e: PictureResponse): Picture {
+function convertFromAPI(pic: APIPicture): Picture {
   return {
-    uploader: e.user.userName,
-    ...e.photo
+    ...pic,
+    taggedUsers: pic.taggedUsers? pic.taggedUsers.split('|') : [],
+    hashtags: pic.hashtags? pic.hashtags.split('|') : [],
   }
 }
 
@@ -23,7 +16,7 @@ export class PictureService {
   constructor(private http: HttpClient) { }
 
   getFeed(): Observable<Picture[]> {
-    return this.http.get<PictureResponse[]>('/api/API/GetFeed24h').pipe(
+    return this.http.get<APIPicture[]>('/api/API/GetFeed24h').pipe(
       map(picList => picList.map(convertFromAPI))
     )
   }
@@ -36,12 +29,11 @@ export class PictureService {
   }
 
   getPicture(id: string): Observable<Picture> {
-    return this.http.get<PictureResponse>('/api/API/GetPhoto/' + id).pipe(
+    return this.http.get<APIPicture>('/api/API/GetPhoto/' + id).pipe(
       map(apipic => convertFromAPI(apipic))
     )
   }
 
-  //TODO: Add title
   uploadPicture(title: string, description: string, tags: string[], users: string[], file: File) {
     const data = new FormData()
     data.append('Title', title)
@@ -61,6 +53,7 @@ export class PictureService {
   }
 
   updateTitle(path: string, title: string) {
+    //this.http.post('/api/API/test', JSON.stringify('testing'), {headers: { 'Content-Type': 'application/json' }}).subscribe(() => {})
     return this.http.put('/api/Image/UpdateTitle/' + path, title)
   }
 

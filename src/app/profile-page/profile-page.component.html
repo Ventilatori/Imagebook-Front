@@ -14,8 +14,13 @@
             <button mat-raised-button color="accent">Manage Friends</button>
             <button mat-raised-button>Change Email</button>
             <button mat-raised-button>Change Password</button>
-            <button mat-raised-button>Change Profile Picture</button>
+            <button mat-raised-button (click)="FileInput.click()">Change Profile Picture</button>
             <button mat-raised-button color="warn" (click)="logout()">Log out</button>
+            <input 
+                hidden 
+                type="file" 
+                #FileInput
+                (change)="changeProfilePic($event)" />
         </div>
     </div>
     <div class="separator" fxHide.xs="true"></div>

@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {AuthDialogComponent, AuthType} from '../auth/auth-dialog/auth-dialog.component';
 import {AuthService, AuthUser} from '../auth/auth.service';
 import {User} from '../models/user.model';
+import {SearchDialogComponent} from '../search-dialog/search-dialog.component';
 import {UploadDialogComponent} from '../upload-dialog/upload-dialog.component';
 
 enum Position {
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { name: "Top", link: "/top", icon: "emoji_events", pos: Position.Left },
     { name: "Tag", link: "/tag/test", icon: "tag", pos: Position.Left },
     { name: "Favorites", link: "/favorites", icon: "favorite", loggedIn: true, pos: Position.Left },
+    { name: "Search", click: () => this.onSearch(), icon: "search", pos: Position.Left },
     { name: "Login", click: () => this.onAuth(AuthType.Login), icon: "login", loggedIn: false, pos: Position.Right },
     { name: "Register", click: () => this.onAuth(AuthType.Register), icon: "person_add", loggedIn: false, pos: Position.Right },
     { name: "Upload", click: () => this.onUpload(), icon: "upload", loggedIn: true, pos: Position.Right },
@@ -80,6 +82,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
       width: '80%',
       maxWidth: '500px',
     });
+  }
+
+  onSearch(): void {
+    const searchDialog = this.dialog.open(SearchDialogComponent, {
+      width: '250px',
+    })
+
+    searchDialog.afterClosed().subscribe(res => {
+      if(res) {
+        const [query, type] = res
+        this.router.navigate(['/search', type, query])
+      }
+    }) 
   }
 
   gotoProfile(): void {

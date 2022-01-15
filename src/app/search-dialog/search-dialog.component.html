@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Search</h1>
+
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+  <div mat-dialog-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput formControlName="search" required>
+        <mat-error *ngIf="searchForm.get('search')?.invalid">
+          You must enter a query!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Search type</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option value="people">People</mat-option>
+          <mat-option value="tags">Tags</mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
+    <button mat-raised-button 
+      type="submit" 
+      color="primary"
+      [disabled]="!searchForm.valid">Search</button>
+  </div>
+</form>
+

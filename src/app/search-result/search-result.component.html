@@ -1,0 +1,10 @@
+<div class="results">
+  <h1>Search results</h1>
+  <mat-selection-list [multiple]="false">
+    <mat-list-option *ngFor="let res of results" (click)="!!res.click && res.click()">
+      <mat-icon mat-list-icon *ngIf="res.icon">{{res.icon}}</mat-icon>
+      <img mat-list-icon *ngIf="res.img" [src]="res.img" />
+      <div mat-line>{{res.title}}</div>
+    </mat-list-option>
+  </mat-selection-list>
+</div>
