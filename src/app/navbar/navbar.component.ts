@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { name: "Feed", link: "/feed", icon: "explore", loggedIn: true, pos: Position.Left },
     { name: "Newest", link: "/newest", icon: "query_builder", pos: Position.Left },
     { name: "Top", link: "/top", icon: "emoji_events", pos: Position.Left },
-    { name: "Tag", link: "/tag/test", icon: "tag", pos: Position.Left },
+    //{ name: "Tag", link: "/tag/test", icon: "tag", pos: Position.Left },
     { name: "Favorites", link: "/favorites", icon: "favorite", loggedIn: true, pos: Position.Left },
     { name: "Search", click: () => this.onSearch(), icon: "search", pos: Position.Left },
     { name: "Login", click: () => this.onAuth(AuthType.Login), icon: "login", loggedIn: false, pos: Position.Right },
@@ -78,10 +78,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onUpload(): void {
-    this.dialog.open(UploadDialogComponent, {
+    const uploadDialog = this.dialog.open(UploadDialogComponent, {
       width: '80%',
       maxWidth: '500px',
     });
+
+    uploadDialog.afterClosed().subscribe(res => {
+      if(res) {
+        this.router.navigate(res)
+      }
+    }) 
   }
 
   onSearch(): void {

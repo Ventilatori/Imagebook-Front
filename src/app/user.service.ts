@@ -5,14 +5,14 @@ import {APIPicture, Picture} from './models/picture.model';
 import {APIUser, User} from './models/user.model';
 import {convertFromAPI} from './picture.service';
 
-// TODO: Merge with APIUser
 interface UserResult {
   userName: string,
   mail: string,
   userType: string,
   description?: string,
   profilePicture?: string,
-  online: boolean
+  online: boolean,
+  isFollowed: boolean
 }
 
 interface GetUserResponse {
@@ -32,6 +32,7 @@ export class UserService {
           name: res.user.userName, 
           email: res.user.mail,
           picture: "/api/Images/Profile/" + (res.user.profilePicture? res.user.profilePicture : "default.png"),
+          isFollowed: res.user.isFollowed,
           uploads: res.uploadedPhotos? res.uploadedPhotos.map(p => convertFromAPI(p)) : [],
           tagged: res.taggedPhotos? res.taggedPhotos.map(p => convertFromAPI(p)) : []
         }
@@ -65,10 +66,19 @@ export class UserService {
           return { 
             name: res.userName,
             email: res.mail,
-            picture: "/api/Images/Profile/" + (res.profilePicture? res.profilePicture : "default.png")
+            picture: "/api/Images/Profile/" + (res.profilePicture? res.profilePicture : "default.png"),
+            isFollowed: res.isFollowed
           }
         })
       })
     )
+  }
+
+  searchTags(query: string): Observable<{ title: string, isFollowed: boolean }[]> {
+    return this.http.get<{ title: string, isFollowed: boolean }[]>('/api/API/SearchHtag/'+query)
+  }
+
+  getRecommendedFriends() {
+    return this.http.get('/api/API/User/GetRecommendedUsers/')
   }
 }

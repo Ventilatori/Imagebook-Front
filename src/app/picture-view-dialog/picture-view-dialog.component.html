@@ -23,7 +23,7 @@
   <div>
     <img mat-card-image [src]="'/api/Images/Standard/'+picture.path" />
   </div>
-  <div class="description">
+  <div class="description" *ngIf="isOwner || picture.description">
     {{ picture.description }} 
     <a *ngIf="isOwner" class="fakeLink"
       (click)="editDesc()">(edit description)</a>
@@ -31,14 +31,14 @@
   <div class="likes">
     <span class="static">Likes: {{ picture.numberOfLikes }}</span>
   </div>
-  <div class="tags" *ngIf="picture.hashtags && picture.hashtags.length != 0">
+  <div class="tags" *ngIf="isOwner || (picture.hashtags && picture.hashtags.length != 0)">
     <span class="static">Tags: </span>
     <a *ngFor="let tag of picture.hashtags" class="fakeLink"
       (click)="dialogRef.close(['/tag/',tag])">#{{ tag }} </a>
     <a *ngIf="isOwner" class="fakeLink"
       (click)="editTags()">(edit)</a>
   </div>
-  <div class="tags" *ngIf="picture.taggedUsers && picture.taggedUsers.length != 0">
+  <div class="tags" *ngIf="isOwner || (picture.taggedUsers && picture.taggedUsers.length != 0)">
     <span class="static">Tagged People: </span>
     <a *ngFor="let p of picture.taggedUsers" class="fakeLink"
       (click)="dialogRef.close(['/user/', p])">{{ p }} </a>

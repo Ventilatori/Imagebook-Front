@@ -13,6 +13,10 @@ export class PictureListPageResolver implements Resolve<Picture[]> {
   constructor(private pictureService: PictureService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Picture[]> {
-    return this.pictureService.getList(route.url[0].path, '');
+    let extraData = ''
+    if(route.url[1]) {
+      extraData = route.url[1].path
+    }
+    return this.pictureService.getList(route.url[0].path, extraData);
   }
 }

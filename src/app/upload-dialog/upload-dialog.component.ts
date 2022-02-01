@@ -8,8 +8,6 @@ import { map, Observable, startWith } from 'rxjs';
 import {NotificationService} from '../notification.service';
 import {PictureService} from '../picture.service';
 
-// TODO: Actually handle files, change text
-
 @Component({
   selector: 'app-upload-dialog',
   templateUrl: './upload-dialog.component.html',
@@ -54,15 +52,21 @@ export class UploadDialogComponent implements OnInit {
       this.pictureService.uploadPicture(
         this.title, this.description, 
         this.tags, this.friends, 
-        this.file).subscribe({
-          next: _ => {
-            this.dialogRef.close()
+        this.file
+      ).subscribe({
+        next: res => {
+          if(res.path) {
+            this.dialogRef.close(['/feed', res.path])
             this.notificationService.notify('Photo uploaded successfully!', 'success')
-          },
-          error: _ => {
-            this.notificationService.notify('Error: Failed to upload photo!', 'danger')
+          } else {
+            this.dialogRef.close()
+            this.notificationService.notify('Photo is awaiting moderation.', 'success')
           }
-        })
+        },
+        error: _ => {
+          this.notificationService.notify('Error: Failed to upload photo!', 'danger')
+        }
+      })
     }
   }
 

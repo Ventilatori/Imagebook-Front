@@ -10,7 +10,9 @@ import {PictureViewDialogComponent} from './picture-view-dialog/picture-view-dia
 import {VerifyDialogComponent} from './auth/verify-dialog/verify-dialog.component';
 import {ModerationDialogComponent} from './moderation-dialog/moderation-dialog.component';
 import {SearchResultComponent} from './search-result/search-result.component';
-import {UserSearchResolver} from './search-dialog/user-search.resolver';
+import {UserSearchResolver} from './search-result/user-search.resolver';
+import {FeedComponent} from './feed/feed.component';
+import {TagSearchResolver} from './search-result/tag-search.resolver';
 
 const picViewChild = { 
   path: ':id', 
@@ -21,7 +23,7 @@ const picViewChild = {
 
 const routes: Routes = [
   { path: '', pathMatch: 'full',redirectTo: 'newest'  },
-  { path: 'feed', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
+  { path: 'feed', component: FeedComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'newest', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'top', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ]},
   { path: 'tag/:id', component: PictureListPageComponent, resolve: { pictures: PictureListPageResolver }, children: [ picViewChild ] },
@@ -29,8 +31,8 @@ const routes: Routes = [
   { path: 'user/:name', component: ProfilePageComponent, resolve: { user: UserResolver }, children: [ picViewChild ] },
   { path: 'verify/:id', component: DialogPageComponent, data: { dialog: VerifyDialogComponent, dialogSize: '300px', dialogData: true, dialogRoute: true }},
   { path: 'moderate', component: DialogPageComponent, data: { dialog: ModerationDialogComponent, dialogSize: '80%' }},
-  { path: 'search/people/:query', component: SearchResultComponent, resolve: { results: UserSearchResolver }, children: [ picViewChild ] },
-  { path: 'search/tags/:query', component: SearchResultComponent, children: [ picViewChild ] },
+  { path: 'search/people/:query', component: SearchResultComponent, resolve: { results: UserSearchResolver }, children: [ picViewChild ], runGuardsAndResolvers: "always", },
+  { path: 'search/tags/:query', component: SearchResultComponent, resolve: { results: TagSearchResolver }, children: [ picViewChild ], runGuardsAndResolvers: "always",},
 ];
 
 @NgModule({

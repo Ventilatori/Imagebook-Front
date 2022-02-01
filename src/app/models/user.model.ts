@@ -4,6 +4,7 @@ export interface APIUser {
     name: string
     email: string
     picture: string
+    isFollowed: boolean
 }
 
 export interface User extends APIUser {

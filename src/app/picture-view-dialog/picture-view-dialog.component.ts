@@ -36,7 +36,10 @@ export class PictureViewDialogComponent implements OnInit {
 
   like() {
     this.pictureService.likePicture(this.picture.path, !this.picture.isLiked).subscribe(
-      _ => this.picture.isLiked = !this.picture.isLiked
+      _ => {
+        this.picture.isLiked = !this.picture.isLiked
+        this.picture.numberOfLikes += 1 * (this.picture.isLiked? 1 : -1)
+      }
     )
   }
 

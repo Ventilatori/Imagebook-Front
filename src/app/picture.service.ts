@@ -17,17 +17,28 @@ export class PictureService {
 
   constructor(private http: HttpClient) { }
 
-  getFeed(): Observable<Picture[]> {
-    return this.http.get<APIPicture[]>('/api/API/GetFeed24h').pipe(
-      map(picList => picList.map(convertFromAPI))
-    )
-  }
-
   getList(type: string, extraData = ''): Observable<Picture[]> {
-    if(type == "feed")
-      return this.getFeed()
+    let url = ''
+    if(type == 'newest')
+      url = '/api/API/GetNew12'
+    else if(type == 'top')
+      url = '/api/API/GetTop'
+    else if(type == 'feed')
+      url = '/api/API/GetFeed24h'
+    else if(type == 'tag')
+      url = '/api/API/GetHtagImages/' + extraData
+    else if(type == 'followed-tags')
+      url = '/api/API/GetHtagFeed24h'
     else
-      return this.http.get<Picture[]>('http://localhost:3000/pictures')
+      throw new Error('Invalid list type: ' + type)
+    return this.http.get<APIPicture[]>(url).pipe(
+      map(picList => {
+        if(picList)
+          return picList.map(convertFromAPI).sort((a,b) => b.numberOfLikes - a.numberOfLikes)
+        else
+          return []
+      })
+    )
   }
 
   getPicture(id: string): Observable<Picture> {
@@ -36,7 +47,7 @@ export class PictureService {
     )
   }
 
-  uploadPicture(title: string, description: string, tags: string[], users: string[], file: File) {
+  uploadPicture(title: string, description: string, tags: string[], users: string[], file: File): Observable<{ path?: string }> {
     const data = new FormData()
     data.append('Title', title)
     data.append('Picture', file)

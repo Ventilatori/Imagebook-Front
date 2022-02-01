@@ -15,8 +15,6 @@ import {UserService} from '../user.service';
 export class ProfilePageComponent implements OnInit, OnDestroy {
   user!: User
   isOwner = false
-  //TODO: Get these from the request
-  isFriend = false
 
   picDelSubscription!: Subscription
 
@@ -51,9 +49,9 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
 
   follow() {
-    this.userService.followUser(this.user.name, !this.isFriend).subscribe({
+    this.userService.followUser(this.user.name, !this.user.isFollowed).subscribe({
       next: _ => { 
-        this.isFriend = !this.isFriend
+        this.user.isFollowed = !this.user.isFollowed
         this.notificationService.notify(`Successfully followed ${this.user.name}!`, 'success')
       },
       error: _ => this.notificationService.notify('Error: Failed to follow user!', 'danger')

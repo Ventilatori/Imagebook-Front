@@ -21,6 +21,7 @@ import { VerifyDialogComponent } from './auth/verify-dialog/verify-dialog.compon
 import { ModerationDialogComponent } from './moderation-dialog/moderation-dialog.component';
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
     ModerationDialogComponent,
     SearchDialogComponent,
     SearchResultComponent,
+    FeedComponent,
   ],
   imports: [
     BrowserModule,

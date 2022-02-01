@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {NotificationService} from 'src/app/notification.service';
 import {AuthService} from '../auth.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class VerifyDialogComponent implements OnInit, OnDestroy {
   constructor(
     private dialogRef: MatDialogRef<VerifyDialogComponent>,
     private authService: AuthService,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public routeData: ActivatedRoute,
   ) { 
 
@@ -38,9 +40,8 @@ export class VerifyDialogComponent implements OnInit, OnDestroy {
       next: _ => {
         this.verified = true
       },
-      error: err => {
-        //TODO: Error display
-        console.log(err) 
+      error: _ => {
+        this.notificationService.notify('Error: Failed to verify account', 'danger')
       }
     })
   }
