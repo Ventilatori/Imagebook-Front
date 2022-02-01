@@ -2,17 +2,11 @@
     <div class="user-info" fxLayout="column" fxLayoutAlign="start center">
         <img [src]="user.picture" class="mat-elevation-z9" />
         <h1>{{user.name}}</h1>
-        <div class="user-info-details" *ngIf="!isOwner">
-            <div>Total Friends: 20</div>
-            <div>Mutual Friends: 4</div>
-        </div>
         <div class="user-controls" fxLayout="column" fxLayoutAlign="center center" *ngIf="!isOwner">
             <button mat-raised-button color="accent" *ngIf="!user.isFollowed" (click)="follow()">Add as a friend</button>
             <button mat-raised-button color="warn" *ngIf="user.isFollowed" (click)="follow()">Remove friend</button>
         </div>
         <div class="user-controls" fxLayout="column" fxLayoutAlign="center center" *ngIf="isOwner">
-            <button mat-raised-button>Change Email</button>
-            <button mat-raised-button>Change Password</button>
             <button mat-raised-button (click)="FileInput.click()">Change Profile Picture</button>
             <button mat-raised-button color="warn" (click)="logout()">Log out</button>
             <input 

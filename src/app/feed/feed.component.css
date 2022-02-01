@@ -1,0 +1,15 @@
+.recommendations {
+    flex: 0 0 30%;
+}
+
+.friend-recs {
+    margin-bottom: 50px;
+}
+
+.friend-recs h2 {
+   margin-bottom: 0px; 
+}
+
+.tag-recs h2 {
+   margin-bottom: 0px; 
+}

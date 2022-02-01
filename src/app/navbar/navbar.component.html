@@ -11,7 +11,7 @@
         </mat-menu>
     </div>
     <mat-icon>storm</mat-icon>
-    SamoVentilatori
+    Ventilatori
     <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="space-between" fxShow fxHide.lt-md>
         <div class="toolbar-left-buttons">
             <a *ngFor="let item of getLinksForPosition(Position.Left)" mat-button [routerLink]="item.link" (click)="!!item.click && item.click()" routerLinkActive #rla="routerLinkActive" [disabled]="!!rla.isActive">

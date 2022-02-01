@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import {Picture} from '../models/picture.model';
+import {APIUser} from '../models/user.model';
 import {NotificationService} from '../notification.service';
 import {PictureService} from '../picture.service';
 import {UserService} from '../user.service';
@@ -13,9 +15,17 @@ export class FeedComponent implements OnInit {
   friendPics: Picture[] = []
   tagPics: Picture[] = []
 
+  friendRecs: APIUser[] = []
+  // Default
+  tagRecs: string[] = [
+    'Funny', 'Cats', 'Cool', 'hehe'
+  ]
+
   constructor(
     private pictureService: PictureService,
+    private userService: UserService,
     private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +46,18 @@ export class FeedComponent implements OnInit {
         this.notificationService.notify('Error: Failed to fetch feed.', 'danger')
       }
     })
+
+    this.userService.getRecommendedFriends().subscribe({
+      next: list => {
+        this.friendRecs = list
+      },
+      error: _ => {
+        this.notificationService.notify('Error: Failed to fetch recommendations.', 'danger')
+      }
+    })
   }
 
+  gotoPage(path: string[]) {
+    this.router.navigate(path)
+  }
 }

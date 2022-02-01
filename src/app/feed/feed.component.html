@@ -1,6 +1,24 @@
 <h1>My Feed</h1>
-<h2>Posts by Friends</h2>
-<app-picture-list [pictures]="friendPics"></app-picture-list>
-<h2>Posts in followed tags</h2>
-<app-picture-list [pictures]="tagPics"></app-picture-list>
-<router-outlet></router-outlet>
+  <div fxLayout="row" fxLayout.xs="column">
+  <div class="posts">
+    <h2>Posts by Friends</h2>
+    <app-picture-list [pictures]="friendPics"></app-picture-list>
+    <h2>Posts in followed tags</h2>
+    <app-picture-list [pictures]="tagPics"></app-picture-list>
+    <router-outlet></router-outlet>
+  </div>
+  <div class="recommendations" fxLayout="column">
+    <div class="friend-recs">
+      <h2>People you might know</h2>
+      <mat-selection-list [multiple]="false" *ngIf="friendRecs.length > 0">
+        <mat-list-option *ngFor="let res of friendRecs" (click)="gotoPage(['/user', res.name])">
+          <img mat-list-icon [src]="res.picture" />
+          <div mat-line>{{res.name}}</div>
+        </mat-list-option>
+      </mat-selection-list>
+      <span *ngIf="friendRecs.length == 0">
+        None for now, follow people to get reccomendations.
+      </span>
+    </div>
+  </div>
+</div>

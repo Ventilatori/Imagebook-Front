@@ -29,6 +29,8 @@ export class PictureService {
       url = '/api/API/GetHtagImages/' + extraData
     else if(type == 'followed-tags')
       url = '/api/API/GetHtagFeed24h'
+    else if(type == 'favorites')
+      url = '/api/API/GetLiked'
     else
       throw new Error('Invalid list type: ' + type)
     return this.http.get<APIPicture[]>(url).pipe(

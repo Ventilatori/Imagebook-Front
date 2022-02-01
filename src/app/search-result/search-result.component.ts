@@ -14,28 +14,13 @@ export interface Result {
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
-  results: Result[] = [
-    {
-      title: 'test', 
-      icon: 'tag',
-      click: () => console.log("test")
-    },
-    {
-      title: 'funny', 
-      icon: 'tag'
-    },
-    {
-      title: 'asdasdasjdklasdj', 
-      img: 'https://pixe.la/profile/img/nogravatar.png'
-    }
-  ]
+  results: Result[] = []
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.data.subscribe((data: Data) => {
       this.results = data['results']
-      console.log(this.results)
     })
   }
 

@@ -79,6 +79,17 @@ export class UserService {
   }
 
   getRecommendedFriends() {
-    return this.http.get('/api/API/User/GetRecommendedUsers/')
+    return this.http.get<UserResult[]>('/api/API/GetRecommendedUsers').pipe(
+      map(resList => {
+        return resList.map(res => { 
+          return { 
+            name: res.userName,
+            email: res.mail,
+            picture: "/api/Images/Profile/" + (res.profilePicture? res.profilePicture : "default.png"),
+            isFollowed: res.isFollowed
+          }
+        })
+      })
+    )
   }
 }
