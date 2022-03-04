@@ -1,6 +1,15 @@
-# Nbp1
+# ImageBook Frontend
+
+Frontend for the ImageBook web app, a social media site based on heavily interlinked images.
+Backend can be found [here](https://github.com/Ventilatori/Imagebook-Back).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.0.
+
+## Features
+
+* ImageBook uses Neo4j to provide advanced statistics and information based on friendship networks as well as image tags and tagged people.
+* Uses Redis to provide a fast cache of the newest posts, as well as for storing temporary data.
+* Provides a simple but efficient moderation system.
 
 ## Development server
 
